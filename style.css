@@ -95,8 +95,7 @@ ul {
 
 .container {
   display: none;
-  position: absolute;
-  left: 13%;
+  margin-left: 240px;
   padding: 50px;
 }
 
@@ -241,7 +240,9 @@ ul {
 
 .header {
   display: none;
+  /* position: fixed; */
   position: fixed;
+  top: 0;
   padding: 50px;
   font-size: 18px;
   height: 100vh;

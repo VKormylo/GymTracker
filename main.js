@@ -322,9 +322,7 @@ class App {
     // Getting coords to position addExerciseWindow
     const { x: left, y: top } = e.target.getBoundingClientRect();
     addExerciseWindow.style.display = "block";
-    addExerciseWindow.style.left = `${
-      left - (window.innerWidth * 13) / 100 - 24
-    }px`;
+    addExerciseWindow.style.left = `${left - 32}px`;
     addExerciseWindow.style.top = `${top - 15}px`;
     addExerciseCancel.addEventListener(
       "click",
@@ -498,7 +496,7 @@ class App {
     const exerciseCoords = e.currentTarget.parentElement.parentElement;
     const { x: left, y: top } = exerciseCoords.getBoundingClientRect();
     addSetWindow.style.display = "block";
-    addSetWindow.style.left = `${left - (window.innerWidth * 13) / 100 + 18}px`;
+    addSetWindow.style.left = `${left + 18}px`;
     addSetWindow.style.top = `${top - 38}px`;
     this._setType();
     addSetCancel.addEventListener(
