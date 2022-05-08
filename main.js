@@ -130,6 +130,7 @@ class App {
   // ------------ HELPER FUNCTIONS ------------
 
   _hideWindows([...elements], [...inputs], text = false) {
+    debugger;
     elements.forEach((element) => (element.style.display = "none"));
     text
       ? inputs.forEach((element) => (element.textContent = ""))
@@ -326,7 +327,12 @@ class App {
     addExerciseWindow.style.top = `${top - 15}px`;
     addExerciseCancel.addEventListener(
       "click",
-      this._hideWindows.bind(this, [addExerciseWindow], [addExerciseInput])
+      this._hideWindows.bind(
+        this,
+        [addExerciseWindow],
+        [addExerciseInput],
+        false
+      )
     );
     // Adding new exercise
     addExercise.addEventListener("click", function () {
@@ -453,13 +459,14 @@ class App {
         this.currentSet.kg = addSetKgInput.value;
         this.currentSet.reps = addSetRepsInput.value;
         this.currentSet.type = this.activeType.dataset.type;
+        console.log(this.activeType.dataset.type);
+        this.setElement.classList.remove(this.setElement.classList.item(1));
+        this.setElement.classList.add(`${this.activeType.dataset.type}`);
+        this.setElement.dataset.id = this.currentSet.id;
         this.setElement.innerHTML = `
-        <div class="exercise-set ${this.activeType.dataset.type}" data-id="${this.currentSet.id}">
           <div class="exercise-kg">${this.currentSet.kg} <span>kg</span></div>
           <div class="exercise-reps">${this.currentSet.reps} <span>reps</span></div>
-        </div>
     `;
-        this.setElement.classList.remove(this.setElement.classList.item(1));
       }
       this._setLocalStorage();
       this._hideWindows(
@@ -504,7 +511,8 @@ class App {
       this._hideWindows.bind(
         this,
         [addSetWindow],
-        [addSetKgInput, addSetRepsInput]
+        [addSetKgInput, addSetRepsInput],
+        false
       )
     );
     this.updateSetBtn?.replaceWith(addSet);
@@ -548,9 +556,17 @@ class App {
     addSetWindow.style.display = "block";
     addSetWindow.style.left = `${left + 22}px`;
     addSetWindow.style.top = `${top - 50}px`;
+    this.types.forEach((type) => {
+      if (type.dataset.type === this.setElement.classList[1]) {
+        type.classList.add(`${this.setElement.classList[1]}`, "active");
+      } else {
+        type.className = "set-type";
+      }
+    });
     this._setType();
     const kgElement = this.setElement.querySelector(".exercise-kg").textContent;
-    const repsElement = this.setElement.querySelector(".exercise-reps").textContent;
+    const repsElement =
+      this.setElement.querySelector(".exercise-reps").textContent;
     addSetKgInput.value = kgElement.slice(0, kgElement.indexOf(" "));
     addSetRepsInput.value = repsElement.slice(0, kgElement.indexOf(" "));
     this.currentSet =
@@ -592,7 +608,8 @@ class App {
       this._hideWindows.bind(
         this,
         [addSetWindow, deleteSet],
-        [addSetKgInput, addSetRepsInput]
+        [addSetKgInput, addSetRepsInput],
+        false
       )
     );
     addSet.replaceWith(this.updateSetBtn);
