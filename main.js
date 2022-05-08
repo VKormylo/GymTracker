@@ -536,7 +536,6 @@ class App {
 
   _updateSet(e) {
     console.log(e.currentTarget);
-    debugger;
     this.setElement = e.currentTarget;
     this.currentExercise =
       this.setElement.parentElement.parentElement.dataset.id - 1;
@@ -547,9 +546,13 @@ class App {
     const exerciseCoords = this.setElement.parentElement.parentElement;
     const { x: left, y: top } = exerciseCoords.getBoundingClientRect();
     addSetWindow.style.display = "block";
-    addSetWindow.style.left = `${left - (window.innerWidth * 13) / 100 + 26}px`;
+    addSetWindow.style.left = `${left + 22}px`;
     addSetWindow.style.top = `${top - 50}px`;
     this._setType();
+    const kgElement = this.setElement.querySelector(".exercise-kg").textContent;
+    const repsElement = this.setElement.querySelector(".exercise-reps").textContent;
+    addSetKgInput.value = kgElement.slice(0, kgElement.indexOf(" "));
+    addSetRepsInput.value = repsElement.slice(0, kgElement.indexOf(" "));
     this.currentSet =
       this.#workouts[this.currentWorkout].exercises[this.currentExercise].sets[
         this.setElement.dataset.id - 1
